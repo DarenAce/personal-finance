@@ -1,0 +1,38 @@
+scalar Date
+
+type Person {
+    id: ID!
+    firstName: String!
+    middleName: String!
+    lastName: String!
+    fullName: String!
+    birthday: Date!
+    email: String!
+}
+
+type Query {
+    allPersons: [Person]!
+    getPerson(id: ID!): Person
+}
+
+type Mutation {
+    createPerson(person: CreatePersonInput!): Person
+    updatePerson(id: ID!, person: UpdatePersonInput!): Person
+    deletePerson(id: ID!): Person
+}
+
+input CreatePersonInput {
+    firstName: String!
+    middleName: String!
+    lastName: String!
+    birthday: Date!
+    email: String!
+}
+
+input UpdatePersonInput {
+    firstName: String
+    middleName: String
+    lastName: String
+    birthday: Date
+    email: String
+}
