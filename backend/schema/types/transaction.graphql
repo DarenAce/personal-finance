@@ -1,0 +1,52 @@
+scalar Date
+
+type Transaction {
+    id: ID!
+    account: Account!
+    card: Card
+    currency: Currency!
+    category: Category!
+    sum: Float!
+    sumInAccountCurrency: Float!
+    transactionDate: Date!
+    processedDate: Date!
+    description: String!
+    comment: String
+}
+
+type Query {
+    allTransactions: [Transaction]!
+    getTransaction(id: ID!): Transaction
+}
+
+type Mutation {
+    createTransaction(transaction: CreateTransactionInput!): Transaction
+    updateTransaction(id: ID!, transaction: UpdateTransactionInput!): Transaction
+    deleteTransaction(id: ID!): Transaction
+}
+
+input CreateTransactionInput {
+    account: ID!
+    card: ID
+    currency: ID!
+    category: ID!
+    sum: Float!
+    sumInAccountCurrency: Float!
+    transactionDate: Date!
+    processedDate: Date!
+    description: String!
+    comment: String
+}
+
+input UpdateTransactionInput {
+    account: ID
+    card: ID
+    currency: ID
+    category: ID
+    sum: Float
+    sumInAccountCurrency: Float
+    transactionDate: Date
+    processedDate: Date
+    description: String
+    comment: String
+}

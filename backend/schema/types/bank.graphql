@@ -1,0 +1,26 @@
+type Bank {
+    id: ID!
+    name: String!
+    description: String
+}
+
+type Query {
+    allBanks: [Bank]!
+    getBank(id: ID!): Bank
+}
+
+type Mutation {
+    createBank(bank: CreateBankInput!): Bank
+    updateBank(id: ID!, bank: UpdateBankInput!): Bank
+    deleteBank(id: ID!): Bank
+}
+
+input CreateBankInput {
+    name: String!
+    description: String
+}
+
+input UpdateBankInput {
+    name: String
+    description: String
+}

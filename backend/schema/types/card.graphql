@@ -1,0 +1,32 @@
+type Card {
+    id: ID!
+    account: Account!
+    owner: Person!
+    number: String!
+    description: String
+}
+
+type Query {
+    allCards: [Card]!
+    getCard(id: ID!): Card
+}
+
+type Mutation {
+    createCard(card: CreateCardInput!): Card
+    updateCard(id: ID!, card: UpdateCardInput!): Card
+    deleteCard(id: ID!): Card
+}
+
+input CreateCardInput {
+    account: ID!
+    owner: ID!
+    number: String!
+    description: String
+}
+
+input UpdateCardInput {
+    account: ID
+    owner: ID
+    number: String
+    description: String
+}
