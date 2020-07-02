@@ -15,9 +15,8 @@ import {
 } from "@material-ui/core";
 import { Add as AddIcon } from "@material-ui/icons";
 import { TransactionQuery, TransactionsQueryResult } from "../utils/types";
-import { getTransactions, ALL_TRANSACTIONS_QUERY } from "../utils/api";
+import { ALL_TRANSACTIONS_QUERY } from "../utils/api";
 import AddTransactionForm from "./AddTransactionForm";
-import AddPersonForm from "./AddPersonForm";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -34,7 +33,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function Expenses() {
     const [isModalOpen, setModalOpen] = useState(false);
-    // const rows: Transaction[] = getTransactions();
     const { loading, error, data } = useQuery<TransactionsQueryResult, null>(ALL_TRANSACTIONS_QUERY);
     const classes = useStyles();
 
@@ -99,6 +97,6 @@ export default function Expenses() {
         <Fab size="medium" color="secondary" onClick={handleOpen} className={classes.addButton}>
             <AddIcon />
         </Fab>
-        <AddPersonForm open={isModalOpen} handleClose={handleClose} />
+        <AddTransactionForm open={isModalOpen} handleClose={handleClose} />
     </>
 };

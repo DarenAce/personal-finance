@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createElement } from "react";
 import clsx from "clsx";
 import {
     createStyles,
@@ -11,12 +11,10 @@ import {
     useTheme
 } from "@material-ui/core";
 import {
-    AccountBalanceWallet as AccountBalanceWalletIcon,
     ChevronLeft as ChevronLeftIcon,
-    ChevronRight as ChevronRightIcon,
-    Payment as PaymentIcon,
-    Tune as TuneIcon
+    ChevronRight as ChevronRightIcon
 } from "@material-ui/icons";
+import routes from "../utils/routes";
 import ListItemLink from "./ListItemLink";
 
 interface AppMenuProps {
@@ -84,9 +82,9 @@ export default function AppMenu(props: AppMenuProps) {
         </div>
         <Divider />
         <List aria-label="application menu">
-            <ListItemLink to="/expenses" primary="Расходы" icon={<PaymentIcon />} />
-            <ListItemLink to="/incomes" primary="Доходы" icon={<AccountBalanceWalletIcon />} />
-            <ListItemLink to="/preferences" primary="Настройки" icon={<TuneIcon />} />
+            {routes.map(route => (
+                <ListItemLink to={route.path} primary={route.displayName} icon={createElement(route.iconComponent)} />
+            ))}
         </List>
         <Divider />
     </Drawer>;
