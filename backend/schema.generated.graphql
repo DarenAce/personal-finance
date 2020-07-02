@@ -1,0 +1,208 @@
+type Account {
+  id: ID!
+  bank: Bank!
+  currency: Currency!
+  owner: Person!
+  number: String!
+  description: String
+}
+
+type Query {
+  allAccounts: [Account]!
+  getAccount(id: ID!): Account
+  allBanks: [Bank]!
+  getBank(id: ID!): Bank
+  allCards: [Card]!
+  getCard(id: ID!): Card
+  allCategories: [Category]!
+  getCategory(id: ID!): Category
+  allCurrencies: [Currency]!
+  getCurrency(id: ID!): Currency
+  allPersons: [Person]!
+  getPerson(id: ID!): Person
+  allTransactions: [Transaction]!
+  getTransaction(id: ID!): Transaction
+}
+
+type Mutation {
+  createAccount(account: CreateAccountInput!): Account
+  updateAccount(id: ID!, account: UpdateAccountInput!): Account
+  deleteAccount(id: ID!): Account
+  createBank(bank: CreateBankInput!): Bank
+  updateBank(id: ID!, bank: UpdateBankInput!): Bank
+  deleteBank(id: ID!): Bank
+  createCard(card: CreateCardInput!): Card
+  updateCard(id: ID!, card: UpdateCardInput!): Card
+  deleteCard(id: ID!): Card
+  createCategory(category: CreateCategoryInput!): Category
+  updateCategory(id: ID!, category: UpdateCategoryInput!): Category
+  deleteCategory(id: ID!): Category
+  createCurrency(currency: CreateCurrencyInput!): Currency
+  updateCurrency(id: ID!, currency: UpdateCurrencyInput!): Currency
+  deleteCurrency(id: ID!): Currency
+  createPerson(person: CreatePersonInput!): Person
+  updatePerson(id: ID!, person: UpdatePersonInput!): Person
+  deletePerson(id: ID!): Person
+  createTransaction(transaction: CreateTransactionInput!): Transaction
+  updateTransaction(id: ID!, transaction: UpdateTransactionInput!): Transaction
+  deleteTransaction(id: ID!): Transaction
+}
+
+input CreateAccountInput {
+  bank: ID!
+  currency: ID!
+  owner: ID!
+  number: String!
+  description: String
+}
+
+input UpdateAccountInput {
+  bank: ID
+  currency: ID
+  owner: ID
+  number: String
+  description: String
+}
+
+type Bank {
+  id: ID!
+  name: String!
+  description: String
+}
+
+input CreateBankInput {
+  name: String!
+  description: String
+}
+
+input UpdateBankInput {
+  name: String
+  description: String
+}
+
+type Card {
+  id: ID!
+  account: Account!
+  owner: Person!
+  number: String!
+  description: String
+}
+
+input CreateCardInput {
+  account: ID!
+  owner: ID!
+  number: String!
+  description: String
+}
+
+input UpdateCardInput {
+  account: ID
+  owner: ID
+  number: String
+  description: String
+}
+
+type Category {
+  id: ID!
+  name: String!
+  description: String
+}
+
+input CreateCategoryInput {
+  name: String!
+  description: String
+}
+
+input UpdateCategoryInput {
+  name: String
+  description: String
+}
+
+type Currency {
+  id: ID!
+  code: String!
+  country: String!
+}
+
+input CreateCurrencyInput {
+  code: String!
+  country: String!
+}
+
+input UpdateCurrencyInput {
+  code: String
+  country: String
+}
+
+scalar Date
+
+type Person {
+  id: ID!
+  firstName: String!
+  middleName: String!
+  lastName: String!
+  fullName: String!
+  birthday: Date!
+  email: String!
+}
+
+input CreatePersonInput {
+  firstName: String!
+  middleName: String!
+  lastName: String!
+  birthday: Date!
+  email: String!
+}
+
+input UpdatePersonInput {
+  firstName: String
+  middleName: String
+  lastName: String
+  birthday: Date
+  email: String
+}
+
+type Transaction {
+  id: ID!
+  account: Account!
+  card: Card
+  currency: Currency!
+  category: Category!
+  sum: Float!
+  sumInAccountCurrency: Float!
+  transactionDate: Date!
+  processedDate: Date!
+  description: String!
+  comment: String
+}
+
+input CreateTransactionInput {
+  account: ID!
+  card: ID
+  currency: ID!
+  category: ID!
+  sum: Float!
+  sumInAccountCurrency: Float!
+  transactionDate: Date!
+  processedDate: Date!
+  description: String!
+  comment: String
+}
+
+input UpdateTransactionInput {
+  account: ID
+  card: ID
+  currency: ID
+  category: ID
+  sum: Float
+  sumInAccountCurrency: Float
+  transactionDate: Date
+  processedDate: Date
+  description: String
+  comment: String
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}

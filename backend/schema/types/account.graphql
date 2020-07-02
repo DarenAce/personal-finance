@@ -1,0 +1,35 @@
+type Account {
+    id: ID!
+    bank: Bank!
+    currency: Currency!
+    owner: Person!
+    number: String!
+    description: String
+}
+
+type Query {
+    allAccounts: [Account]!
+    getAccount(id: ID!): Account
+}
+
+type Mutation {
+    createAccount(account: CreateAccountInput!): Account
+    updateAccount(id: ID!, account: UpdateAccountInput!): Account
+    deleteAccount(id: ID!): Account
+}
+
+input CreateAccountInput {
+    bank: ID!
+    currency: ID!
+    owner: ID!
+    number: String!
+    description: String
+}
+
+input UpdateAccountInput {
+    bank: ID
+    currency: ID
+    owner: ID
+    number: String
+    description: String
+}

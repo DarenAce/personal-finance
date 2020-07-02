@@ -1,0 +1,20 @@
+{
+    "name": "personal-finance-server",
+    "version": "1.0.0",
+    "description": "Server side of \"Personal finance\" application.",
+    "author": "Andrey Salnikov",
+    "license": "ISC",
+    "main": "server.js",
+    "scripts": {
+        "generateSchema": "node generateSchema.js"
+    },
+    "dependencies": {
+        "cors": "^2.8.5",
+        "express": "^4.17.1",
+        "express-graphql": "^0.9.0",
+        "graphql": "^15.1.0",
+        "graphql-tools": "^6.0.9",
+        "merge-graphql-schemas": "^1.7.8",
+        "mongoose": "^5.9.18"
+    }
+}
