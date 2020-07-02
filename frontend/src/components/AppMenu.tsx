@@ -83,7 +83,7 @@ export default function AppMenu(props: AppMenuProps) {
         <Divider />
         <List aria-label="application menu">
             {routes.map(route => (
-                <ListItemLink to={route.path} primary={route.displayName} icon={createElement(route.iconComponent)} />
+                <ListItemLink to={route.path} primary={route.displayName} icon={createElement(route.iconComponent)} key={route.name} />
             ))}
         </List>
         <Divider />
