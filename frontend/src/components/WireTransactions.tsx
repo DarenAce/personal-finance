@@ -16,7 +16,7 @@ import {
 import { Add as AddIcon } from "@material-ui/icons";
 import { TransactionQuery, TransactionsQueryResult } from "../utils/types";
 import { ALL_TRANSACTIONS_QUERY } from "../utils/api";
-import AddTransactionForm from "./AddTransactionForm";
+import AddWireTransactionForm from "./AddWireTransactionForm";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -65,7 +65,7 @@ export default function Expenses() {
                 <TableCell>{transaction.account.bank.name}</TableCell>
                 <TableCell>{transaction.account.description}</TableCell>
                 <TableCell>{transaction.card ? transaction.card.description : ""}</TableCell>
-                <TableCell>{transaction.transactionDate.toLocaleDateString()}</TableCell>
+                <TableCell>{new Date(transaction.transactionDate).toLocaleDateString()}</TableCell>
                 <TableCell>{transaction.sum.toLocaleString()}</TableCell>
                 <TableCell>{transaction.description}</TableCell>
                 <TableCell>{transaction.category.name}</TableCell>
@@ -97,6 +97,6 @@ export default function Expenses() {
         <Fab size="medium" color="secondary" onClick={handleOpen} className={classes.addButton}>
             <AddIcon />
         </Fab>
-        <AddTransactionForm open={isModalOpen} handleClose={handleClose} />
+        <AddWireTransactionForm open={isModalOpen} handleClose={handleClose} />
     </>
 };
