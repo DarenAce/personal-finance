@@ -1,26 +1,34 @@
+import {
+    AccountBalanceWallet as AccountBalanceWalletIcon,
+    Payment as PaymentIcon,
+    Tune as TuneIcon
+} from "@material-ui/icons";
 import { Route } from "./types";
-import Expenses from "../components/Expenses";
-import Incomes from "../components/Incomes";
+import WireTransactions from "../components/WireTransactions";
+import CashTransactions from "../components/CashTransactions";
 import Preferences from "../components/Preferences";
 
 const routes: Route[] = [
     {
-        name: "expences",
-        path: "/expenses",
-        displayName: "Расходы",
-        component: Expenses
+        name: "wire-transactions",
+        path: "/wire-transactions",
+        displayName: "Безналичные",
+        component: WireTransactions,
+        iconComponent: PaymentIcon
     },
     {
-        name: "incomes",
-        path: "/incomes",
-        displayName: "Доходы",
-        component: Incomes
+        name: "cash-transactions",
+        path: "/cash-transactions",
+        displayName: "Наличные",
+        component: CashTransactions,
+        iconComponent: AccountBalanceWalletIcon
     },
     {
         name: "preferences",
         path: "/preferences",
         displayName: "Настройки",
-        component: Preferences
+        component: Preferences,
+        iconComponent: TuneIcon
     }
 ];
 

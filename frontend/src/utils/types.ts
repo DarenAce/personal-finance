@@ -5,6 +5,7 @@ export interface Route {
     path: string;
     displayName: string;
     component: ComponentType<any>;
+    iconComponent: ComponentType<any>;
 }
 
 export interface Person {

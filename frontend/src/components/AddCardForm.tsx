@@ -106,7 +106,7 @@ export default function AddCardForm(props: AddCardFormProps) {
         onClose={handleClose}
         aria-labelledby="add-card-title"
     >
-        <DialogTitle id="add-card-title">Добавление счёта</DialogTitle>
+        <DialogTitle id="add-card-title">Добавление карты</DialogTitle>
         <DialogContent>
             <TextField
                 id="add-card-number"
