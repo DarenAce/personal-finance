@@ -15,9 +15,8 @@ import {
 } from "@material-ui/core";
 import { Add as AddIcon } from "@material-ui/icons";
 import { TransactionQuery, TransactionsQueryResult } from "../utils/types";
-import { getTransactions, ALL_TRANSACTIONS_QUERY } from "../utils/api";
-import AddTransactionForm from "./AddTransactionForm";
-import AddPersonForm from "./AddPersonForm";
+import { ALL_TRANSACTIONS_QUERY } from "../utils/api";
+import AddWireTransactionForm from "./AddWireTransactionForm";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -34,7 +33,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function Expenses() {
     const [isModalOpen, setModalOpen] = useState(false);
-    // const rows: Transaction[] = getTransactions();
     const { loading, error, data } = useQuery<TransactionsQueryResult, null>(ALL_TRANSACTIONS_QUERY);
     const classes = useStyles();
 
@@ -67,7 +65,7 @@ export default function Expenses() {
                 <TableCell>{transaction.account.bank.name}</TableCell>
                 <TableCell>{transaction.account.description}</TableCell>
                 <TableCell>{transaction.card ? transaction.card.description : ""}</TableCell>
-                <TableCell>{transaction.transactionDate.toLocaleDateString()}</TableCell>
+                <TableCell>{new Date(transaction.transactionDate).toLocaleDateString()}</TableCell>
                 <TableCell>{transaction.sum.toLocaleString()}</TableCell>
                 <TableCell>{transaction.description}</TableCell>
                 <TableCell>{transaction.category.name}</TableCell>
@@ -99,6 +97,6 @@ export default function Expenses() {
         <Fab size="medium" color="secondary" onClick={handleOpen} className={classes.addButton}>
             <AddIcon />
         </Fab>
-        <AddPersonForm open={isModalOpen} handleClose={handleClose} />
+        <AddWireTransactionForm open={isModalOpen} handleClose={handleClose} />
     </>
 };

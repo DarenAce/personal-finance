@@ -62,7 +62,7 @@ export default function App() {
                     <main className={classes.content}>
                         <div className={classes.appBarSpacer}></div>
                         <Switch>
-                            {routes.map(route => <Route exact path={route.path} component={route.component} />)}
+                            {routes.map(route => <Route exact path={route.path} component={route.component} key={route.name} />)}
                             <Redirect from="/" to={routes[0].path} />
                         </Switch>
                     </main>
