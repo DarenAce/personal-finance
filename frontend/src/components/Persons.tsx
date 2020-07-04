@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export default function Persons() {
-    const [isModalOpen, setModalOpen] = useState<boolean>(false);    
+    const [isModalOpen, setModalOpen] = useState<boolean>(false);
     const { loading, error, data } = useQuery<PersonsQueryResult, null>(ALL_PERSONS_QUERY);
     const classes = useStyles();
 
@@ -91,6 +91,6 @@ export default function Persons() {
         <Fab size="medium" color="secondary" onClick={handleModalOpen} className={classes.addButton}>
             <AddIcon />
         </Fab>
-        <AddPersonForm open={isModalOpen} handleClose={handleModalClose} />
+        <AddPersonForm isOpen={isModalOpen} onCloseCallback={handleModalClose} />
     </>;
 };

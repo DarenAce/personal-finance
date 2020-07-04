@@ -1,5 +1,11 @@
-import React, { useState, ChangeEvent } from "react";
-import { useMutation, useQuery } from "react-apollo";
+import React, {
+    ChangeEvent,
+    useState
+} from "react";
+import {
+    useQuery,
+    useMutation
+} from "react-apollo";
 import {
     Button,
     Dialog,
@@ -22,19 +28,22 @@ import {
 } from "../utils/api";
 
 interface AddCardFormProps {
-    open: boolean;
-    handleClose: () => void;
+    isOpen: boolean;
+    onCloseCallback: () => void;
 }
 
 export default function AddCardForm(props: AddCardFormProps) {
-    const { open, handleClose } = props;
+    const { isOpen, onCloseCallback } = props;
+
     const [number, setNumber] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [account, setAccount] = useState<string>("");
     const [owner, setOwner] = useState<string>("");
+
     const [isNumberCorrect, setNumberCorrect] = useState<boolean>(true);
     const [isAccountCorrect, setAccountCorrect] = useState<boolean>(true);
     const [isOwnerCorrect, setOwnerCorrect] = useState<boolean>(true);
+
     const [numberHelperText, setNumberHelperText] = useState<string>(" ");
     const [accountHelperText, setAccountHelperText] = useState<string>(" ");
     const [ownerHelperText, setOwnerHelperText] = useState<string>(" ");
@@ -96,14 +105,30 @@ export default function AddCardForm(props: AddCardFormProps) {
         }
     };
 
+    const handleClose = () => {
+        clearFields();
+        onCloseCallback();
+    };
+
     const handleSubmit = () => {
-        isNumberCorrect && isAccountCorrect && isOwnerCorrect && saveCard();
-        handleClose();
+        isNumberCorrect
+            && isAccountCorrect
+            && isOwnerCorrect
+            && saveCard();
+        clearFields();
+        onCloseCallback();
+    };
+
+    const clearFields = () => {
+        setNumber("");
+        setDescription("");
+        setAccount("");
+        setOwner("");
     };
 
     return <Dialog
-        open={open}
-        onClose={handleClose}
+        open={isOpen}
+        onClose={onCloseCallback}
         aria-labelledby="add-card-title"
     >
         <DialogTitle id="add-card-title">Добавление карты</DialogTitle>

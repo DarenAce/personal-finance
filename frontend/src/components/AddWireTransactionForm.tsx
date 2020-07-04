@@ -9,6 +9,7 @@ import {
     MenuItem,
     TextField
 } from "@material-ui/core";
+import { KeyboardDateTimePicker } from "@material-ui/pickers";
 import {
     AccountsQueryResult,
     CardsQueryResult,
@@ -24,15 +25,14 @@ import {
     ALL_CURRENCIES_QUERY,
     ADD_TRANSACTION_MUTATION
 } from "../utils/api";
-import { KeyboardDateTimePicker } from "@material-ui/pickers";
 
 interface AddWireTransactionFormProps {
-    open: boolean;
-    handleClose: () => void;
+    isOpen: boolean;
+    onCloseCallback: () => void;
 }
 
 export default function AddWireTransactionForm(props: AddWireTransactionFormProps) {
-    const { open, handleClose } = props;
+    const { isOpen, onCloseCallback } = props;
 
     const [account, setAccount] = useState<string>("");
     const [card, setCard] = useState<string>("");
@@ -174,15 +174,41 @@ export default function AddWireTransactionForm(props: AddWireTransactionFormProp
         setComment(event.target.value);
     };
 
+    const handleClose = () => {
+        clearFields();
+        onCloseCallback();
+    };
+
     const handleSubmit = () => {
-        isAccountCorrect && isCurrencyCorrect && isCategoryCorrect && isSumCorrect && isSumInAccountCurrencyCorrect
-            && isTransactionDateCorrect && isProcessedDateCorrect && isDescriptionCorrect && saveTransaction();
-        handleClose();
+        isAccountCorrect
+            && isCurrencyCorrect
+            && isCategoryCorrect
+            && isSumCorrect
+            && isSumInAccountCurrencyCorrect
+            && isTransactionDateCorrect
+            && isProcessedDateCorrect
+            && isDescriptionCorrect
+            && saveTransaction();
+        clearFields();
+        onCloseCallback();
+    };
+
+    const clearFields = () => {
+        setAccount("");
+        setCard("");
+        setCurrency("");
+        setCategory("");
+        setSum(0);
+        setSumInAccountCurrency(0);
+        setTransactionDate(null);
+        setProcessedDate(null);
+        setDescription("");
+        setComment("");
     };
 
     return <Dialog
-        open={open}
-        onClose={handleClose}
+        open={isOpen}
+        onClose={onCloseCallback}
         aria-labelledby="add-wire-transaction-title"
     >
         <DialogTitle id="add-wire-transaction-title">Добавление безналичной транзакции</DialogTitle>

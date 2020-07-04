@@ -91,6 +91,6 @@ export default function Accounts() {
         <Fab size="medium" color="secondary" onClick={handleModalOpen} className={classes.addButton}>
             <AddIcon />
         </Fab>
-        <AddAccountForm open={isModalOpen} handleClose={handleModalClose} />
+        <AddAccountForm isOpen={isModalOpen} onCloseCallback={handleModalClose} />
     </>;
 };

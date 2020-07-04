@@ -97,6 +97,6 @@ export default function Expenses() {
         <Fab size="medium" color="secondary" onClick={handleOpen} className={classes.addButton}>
             <AddIcon />
         </Fab>
-        <AddWireTransactionForm open={isModalOpen} handleClose={handleClose} />
+        <AddWireTransactionForm isOpen={isModalOpen} onCloseCallback={handleClose} />
     </>
 };

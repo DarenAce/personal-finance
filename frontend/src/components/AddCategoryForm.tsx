@@ -1,4 +1,7 @@
-import React, { useState, ChangeEvent } from "react";
+import React, {
+    ChangeEvent,
+    useState
+} from "react";
 import { useMutation } from "react-apollo";
 import {
     Button,
@@ -8,20 +11,26 @@ import {
     DialogTitle,
     TextField
 } from "@material-ui/core";
+import {
+    Category,
+    NewCategoryDetails
+} from "../utils/types";
 import { ADD_CATEGORY_MUTATION } from "../utils/api";
-import { Category, NewCategoryDetails } from "../utils/types";
 
 interface AddCategoryFormProps {
-    open: boolean;
-    handleClose: () => void;
+    isOpen: boolean;
+    onCloseCallback: () => void;
 }
 
 export default function AddCategoryForm(props: AddCategoryFormProps) {
-    const { open, handleClose } = props;
+    const { isOpen, onCloseCallback } = props;
+
     const [name, setName] = useState<string>("");
     const [description, setDescription] = useState<string>("");
+
     const [isNameCorrect, setNameCorrect] = useState<boolean>(true);
-    const [nameeHelperText, setNameHelperText] = useState<string>(" ");
+
+    const [nameHelperText, setNameHelperText] = useState<string>(" ");
 
     const [saveCategory, { error, data }] = useMutation<
         { created: Category },
@@ -51,14 +60,25 @@ export default function AddCategoryForm(props: AddCategoryFormProps) {
         setDescription(event.target.value);
     };
 
+    const handleClose = () => {
+        clearFields();
+        onCloseCallback();
+    };
+
     const handleSubmit = () => {
         isNameCorrect && saveCategory();
-        handleClose();
+        clearFields();
+        onCloseCallback();
+    };
+
+    const clearFields = () => {
+        setName("");
+        setDescription("");
     };
 
     return <Dialog
-        open={open}
-        onClose={handleClose}
+        open={isOpen}
+        onClose={onCloseCallback}
         aria-labelledby="add-category-title"
     >
         <DialogTitle id="add-category-title">Добавление категории</DialogTitle>
@@ -70,7 +90,7 @@ export default function AddCategoryForm(props: AddCategoryFormProps) {
                 value={name}
                 onChange={handleNameChange}
                 error={!isNameCorrect}
-                helperText={nameeHelperText}
+                helperText={nameHelperText}
                 autoFocus
                 required
                 fullWidth

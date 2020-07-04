@@ -91,6 +91,6 @@ export default function Cards() {
         <Fab size="medium" color="secondary" onClick={handleModalOpen} className={classes.addButton}>
             <AddIcon />
         </Fab>
-        <AddCardForm open={isModalOpen} handleClose={handleModalClose} />
+        <AddCardForm isOpen={isModalOpen} onCloseCallback={handleModalClose} />
     </>;
 };

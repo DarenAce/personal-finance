@@ -87,6 +87,6 @@ export default function Currencies() {
         <Fab size="medium" color="secondary" onClick={handleModalOpen} className={classes.addButton}>
             <AddIcon />
         </Fab>
-        <AddCurrencyForm open={isModalOpen} handleClose={handleModalClose} />
+        <AddCurrencyForm isOpen={isModalOpen} onCloseCallback={handleModalClose} />
     </>;
 };
