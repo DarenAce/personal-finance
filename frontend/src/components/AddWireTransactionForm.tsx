@@ -22,7 +22,7 @@ import {
     ALL_CARDS_QUERY,
     ALL_CATEGORIES_QUERY,
     ALL_CURRENCIES_QUERY,
-    ADD_TRANSACTION_MUTATION
+    ADD_WIRE_TRANSACTION_MUTATION
 } from "../utils/api";
 import { KeyboardDateTimePicker } from "@material-ui/pickers";
 
@@ -64,7 +64,7 @@ export default function AddWireTransactionForm(props: AddWireTransactionFormProp
     const [saveTransaction, { error, data }] = useMutation<
         { created: Transaction },
         { transaction: NewTransactionDetails }
-    >(ADD_TRANSACTION_MUTATION, {
+    >(ADD_WIRE_TRANSACTION_MUTATION, {
         variables: {
             transaction: {
                 account,

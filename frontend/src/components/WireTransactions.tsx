@@ -18,7 +18,7 @@ import {
     Transaction,
     TransactionsQueryResult
 } from "../utils/types";
-import { ALL_TRANSACTIONS_QUERY } from "../utils/api";
+import { ALL_WIRE_TRANSACTIONS_QUERY } from "../utils/api";
 import AddWireTransactionForm from "./AddWireTransactionForm";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function Expenses() {
     const [isModalOpen, setModalOpen] = useState(false);
-    const { loading, error, data } = useQuery<TransactionsQueryResult, null>(ALL_TRANSACTIONS_QUERY);
+    const { loading, error, data } = useQuery<TransactionsQueryResult, null>(ALL_WIRE_TRANSACTIONS_QUERY);
     const classes = useStyles();
 
     const handleOpen = () => {
