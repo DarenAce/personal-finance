@@ -1,4 +1,7 @@
-import React, { useState, ChangeEvent } from "react";
+import React, {
+    ChangeEvent,
+    useState
+} from "react";
 import { useMutation, useQuery } from "react-apollo";
 import {
     Button,
@@ -9,25 +12,39 @@ import {
     TextField,
     MenuItem
 } from "@material-ui/core";
-import { ADD_ACCOUNT_MUTATION, ALL_BANKS_QUERY, ALL_CURRENCIES_QUERY, ALL_PERSONS_QUERY } from "../utils/api";
-import { Account, NewAccountDetails, BanksQueryResult, CurrenciesQueryResult, PersonsQueryResult } from "../utils/types";
+import {
+    Account,
+    BanksQueryResult,
+    CurrenciesQueryResult,
+    NewAccountDetails,
+    PersonsQueryResult
+} from "../utils/types";
+import {
+    ADD_ACCOUNT_MUTATION,
+    ALL_BANKS_QUERY,
+    ALL_CURRENCIES_QUERY,
+    ALL_PERSONS_QUERY
+} from "../utils/api";
 
 interface AddAccountFormProps {
-    open: boolean;
-    handleClose: () => void;
+    isOpen: boolean;
+    onCloseCallback: () => void;
 }
 
 export default function AddAccountForm(props: AddAccountFormProps) {
-    const { open, handleClose } = props;
+    const { isOpen, onCloseCallback } = props;
+
     const [number, setNumber] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [bank, setBank] = useState<string>("");
     const [currency, setCurrency] = useState<string>("");
     const [owner, setOwner] = useState<string>("");
+
     const [isNumberCorrect, setNumberCorrect] = useState<boolean>(true);
     const [isBankCorrect, setBankCorrect] = useState<boolean>(true);
     const [isCurrencyCorrect, setCurrencyCorrect] = useState<boolean>(true);
     const [isOwnerCorrect, setOwnerCorrect] = useState<boolean>(true);
+
     const [numberHelperText, setNumberHelperText] = useState<string>(" ");
     const [bankHelperText, setBankHelperText] = useState<string>(" ");
     const [currencyHelperText, setCurrencyHelperText] = useState<string>(" ");
@@ -104,14 +121,32 @@ export default function AddAccountForm(props: AddAccountFormProps) {
         }
     };
 
+    const handleClose = () => {
+        clearFields();
+        onCloseCallback();
+    };
+
     const handleSubmit = () => {
-        isNumberCorrect && isBankCorrect && isCurrencyCorrect && isOwnerCorrect && saveAccount();
-        handleClose();
+        isNumberCorrect
+            && isBankCorrect
+            && isCurrencyCorrect
+            && isOwnerCorrect
+            && saveAccount();
+        clearFields();
+        onCloseCallback();
+    };
+
+    const clearFields = () => {
+        setNumber("");
+        setDescription("");
+        setBank("");
+        setCurrency("");
+        setOwner("");
     };
 
     return <Dialog
-        open={open}
-        onClose={handleClose}
+        open={isOpen}
+        onClose={onCloseCallback}
         aria-labelledby="add-account-title"
     >
         <DialogTitle id="add-account-title">Добавление счёта</DialogTitle>

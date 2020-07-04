@@ -85,6 +85,6 @@ export default function Categories() {
         <Fab size="medium" color="secondary" onClick={handleModalOpen} className={classes.addButton}>
             <AddIcon />
         </Fab>
-        <AddCategoryForm open={isModalOpen} handleClose={handleModalClose} />
+        <AddCategoryForm isOpen={isModalOpen} onCloseCallback={handleModalClose} />
     </>;
 };

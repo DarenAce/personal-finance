@@ -1,4 +1,7 @@
-import React, { useState, ChangeEvent } from "react";
+import React, {
+    ChangeEvent,
+    useState
+} from "react";
 import { useMutation } from "react-apollo";
 import {
     Button,
@@ -8,22 +11,28 @@ import {
     DialogTitle,
     TextField
 } from "@material-ui/core";
+import {
+    Currency,
+    NewCurrencyDetails
+} from "../utils/types";
 import { ADD_CURRENCY_MUTATION } from "../utils/api";
-import { Currency, NewCurrencyDetails } from "../utils/types";
 
 interface AddCurrencyFormProps {
-    open: boolean;
-    handleClose: () => void;
+    isOpen: boolean;
+    onCloseCallback: () => void;
 }
 
 export default function AddCurrencyForm(props: AddCurrencyFormProps) {
-    const { open, handleClose } = props;
+    const { isOpen, onCloseCallback } = props;
+
     const [code, setCode] = useState<string>("");
     const [country, setCountry] = useState<string>("");
     const [sign, setSign] = useState<string>("");
+
     const [isCodeCorrect, setCodeCorrect] = useState<boolean>(true);
     const [isCountryCorrect, setCountryCorrect] = useState<boolean>(true);
     const [isSignCorrect, setSignCorrect] = useState<boolean>(true);
+
     const [codeHelperText, setCodeHelperText] = useState<string>(" ");
     const [countryHelperText, setCountryHelperText] = useState<string>(" ");
     const [signHelperText, setSignHelperText] = useState<string>(" ");
@@ -77,14 +86,29 @@ export default function AddCurrencyForm(props: AddCurrencyFormProps) {
         }
     };
 
+    const handleClose = () => {
+        clearFields();
+        onCloseCallback();
+    };
+
     const handleSubmit = () => {
-        isCodeCorrect && isCountryCorrect && isSignCorrect && saveCurrency();
-        handleClose();
+        isCodeCorrect
+            && isCountryCorrect
+            && isSignCorrect
+            && saveCurrency();
+        clearFields();
+        onCloseCallback();
+    };
+
+    const clearFields = () => {
+        setCode("");
+        setCountry("");
+        setSign("");
     };
 
     return <Dialog
-        open={open}
-        onClose={handleClose}
+        open={isOpen}
+        onClose={onCloseCallback}
         aria-labelledby="add-currency-title"
     >
         <DialogTitle id="add-currency-title">Добавление валюты</DialogTitle>

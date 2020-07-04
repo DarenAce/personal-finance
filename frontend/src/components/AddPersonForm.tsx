@@ -1,4 +1,7 @@
-import React, { useState, ChangeEvent } from "react";
+import React, {
+    ChangeEvent,
+    useState
+} from "react";
 import { useMutation } from "react-apollo";
 import {
     Button,
@@ -9,24 +12,30 @@ import {
     TextField
 } from "@material-ui/core";
 import { KeyboardDatePicker } from "@material-ui/pickers";
+import {
+    NewPersonDetails,
+    Person
+} from "../utils/types";
 import { ADD_PERSON_MUTATION } from "../utils/api";
-import { NewPersonDetails, Person } from "../utils/types";
 
 interface AddPersonFormProps {
-    open: boolean;
-    handleClose: () => void;
+    isOpen: boolean;
+    onCloseCallback: () => void;
 }
 
 export default function AddPersonForm(props: AddPersonFormProps) {
-    const { open, handleClose } = props;
+    const { isOpen, onCloseCallback } = props;
+
     const [firstName, setFirstName] = useState<string>("");
     const [middleName, setMiddleName] = useState<string>("");
     const [lastName, setLastName] = useState<string>("");
     const [birthday, setBirthday] = useState<Date | null>(null);
     const [email, setEmail] = useState<string>("");
+
     const [isFirstNameCorrect, setFirstNameCorrect] = useState<boolean>(true);
     const [isLastNameCorrect, setLastNameCorrect] = useState<boolean>(true);
     const [isEmailCorrect, setEmailCorrect] = useState<boolean>(true);
+
     const [firstNameHelperText, setFirstNameHelperText] = useState<string>(" ");
     const [lastNameHelperText, setLastNameHelperText] = useState<string>(" ");
     const [emailHelperText, setEmailHelperText] = useState<string>(" ");
@@ -90,13 +99,31 @@ export default function AddPersonForm(props: AddPersonFormProps) {
         }
     };
 
+    const handleClose = () => {
+        clearFields();
+        onCloseCallback();
+    };
+
     const handleSubmit = () => {
-        isFirstNameCorrect && isLastNameCorrect && birthday && isEmailCorrect && savePerson();
-        handleClose();
+        isFirstNameCorrect
+            && isLastNameCorrect
+            && birthday
+            && isEmailCorrect
+            && savePerson();
+        clearFields();
+        onCloseCallback();
+    };
+
+    const clearFields = () => {
+        setFirstName("");
+        setMiddleName("");
+        setLastName("");
+        setBirthday(null);
+        setEmail("");
     };
 
     return <Dialog
-        open={open}
+        open={isOpen}
         onClose={handleClose}
         aria-labelledby="add-person-title"
     >
