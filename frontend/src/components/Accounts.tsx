@@ -14,7 +14,7 @@ import {
     Theme
 } from "@material-ui/core";
 import { Add as AddIcon } from "@material-ui/icons";
-import { AccountsQueryResult, AccountQuery } from "../utils/types";
+import { Account, AccountsQueryResult } from "../utils/types";
 import { ALL_ACCOUNTS_QUERY } from "../utils/api";
 import AddAccountForm from "./AddAccountForm";
 
@@ -60,7 +60,7 @@ export default function Accounts() {
                 <TableCell colSpan={numberOfColumns} align="center">Счета не найдены</TableCell>
             </TableRow>;
         }
-        return data.allAccounts.map((account: AccountQuery) =>
+        return data.allAccounts.map((account: Account) =>
             <TableRow key={account.id}>
                 <TableCell>{account.number}</TableCell>
                 <TableCell>{account.description}</TableCell>

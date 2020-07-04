@@ -15,7 +15,7 @@ import {
 } from "@material-ui/core";
 import { Add as AddIcon } from "@material-ui/icons";
 import AddPersonForm from "./AddPersonForm";
-import { PersonQuery, PersonsQueryResult } from "../utils/types";
+import { Person, PersonsQueryResult } from "../utils/types";
 import { ALL_PERSONS_QUERY } from "../utils/api";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -60,7 +60,7 @@ export default function Persons() {
                 <TableCell colSpan={numberOfColumns} align="center">Пользователи не найдены</TableCell>
             </TableRow>;
         }
-        return data.allPersons.map((person: PersonQuery) =>
+        return data.allPersons.map((person: Person) =>
             <TableRow key={person.id}>
                 <TableCell>{person.firstName}</TableCell>
                 <TableCell>{person.middleName}</TableCell>

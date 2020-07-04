@@ -14,7 +14,7 @@ import {
     Theme
 } from "@material-ui/core";
 import { Add as AddIcon } from "@material-ui/icons";
-import { CurrenciesQueryResult, CurrencyQuery } from "../utils/types";
+import { CurrenciesQueryResult, Currency } from "../utils/types";
 import { ALL_CURRENCIES_QUERY } from "../utils/api";
 import AddCurrencyForm from "./AddCurrencyForm";
 
@@ -60,7 +60,7 @@ export default function Currencies() {
                 <TableCell colSpan={numberOfColumns} align="center">Валюты не найдены</TableCell>
             </TableRow>;
         }
-        return data.allCurrencies.map((currency: CurrencyQuery) =>
+        return data.allCurrencies.map((currency: Currency) =>
             <TableRow key={currency.id}>
                 <TableCell>{currency.code}</TableCell>
                 <TableCell>{currency.country}</TableCell>

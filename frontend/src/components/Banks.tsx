@@ -14,7 +14,7 @@ import {
     Theme
 } from "@material-ui/core";
 import { Add as AddIcon } from "@material-ui/icons";
-import { BankQuery, BanksQueryResult } from "../utils/types";
+import { Bank, BanksQueryResult } from "../utils/types";
 import { ALL_BANKS_QUERY } from "../utils/api";
 import AddBankForm from "./AddBankForm";
 
@@ -60,7 +60,7 @@ export default function Currencies() {
                 <TableCell colSpan={numberOfColumns} align="center">Банки не найдены</TableCell>
             </TableRow>;
         }
-        return data.allBanks.map((bank: BankQuery) =>
+        return data.allBanks.map((bank: Bank) =>
             <TableRow key={bank.id}>
                 <TableCell>{bank.name}</TableCell>
                 <TableCell>{bank.description}</TableCell>

@@ -18,18 +18,8 @@ export interface Person {
     email: string;
 }
 
-export interface PersonQuery {
-    id: string;
-    firstName: string;
-    middleName: string;
-    lastName: string;
-    fullName: string;
-    birthday: Date;
-    email: string;
-}
-
 export interface PersonsQueryResult {
-    allPersons: PersonQuery[];
+    allPersons: Person[];
 }
 
 export interface NewPersonDetails {
@@ -41,13 +31,6 @@ export interface NewPersonDetails {
 }
 
 export interface Currency {
-    id: string;
-    code: string;
-    country: string;
-    sign: string;
-}
-
-export interface CurrencyQuery {
     id: string;
     code: string;
     country: string;
@@ -70,14 +53,8 @@ export interface Bank {
     description: string;
 }
 
-export interface BankQuery {
-    id: string;
-    name: string;
-    description: string;
-}
-
 export interface BanksQueryResult {
-    allBanks: BankQuery[];
+    allBanks: Bank[];
 }
 
 export interface NewBankDetails {
@@ -90,22 +67,6 @@ export interface Account {
     bank: Bank;
     currency: Currency;
     owner: Person;
-    number: string;
-    description: string;
-}
-
-export interface AccountQuery {
-    id: string;
-    bank: {
-        name: string;
-    };
-    currency: {
-        code: string;
-        sign: string;
-    };
-    owner: {
-        fullName: string;
-    };
     number: string;
     description: string;
 }
@@ -130,29 +91,6 @@ export interface Card {
     description: string;
 }
 
-export interface CardQuery {
-    id: string;
-    account: {
-        bank: {
-            name: string;
-        };
-        currency: {
-            code: string;
-            sign: string;
-        };
-        owner: {
-            fullName: string;
-        };
-        number: string;
-        description: string;
-    };
-    owner: {
-        fullname: string;
-    };
-    number: string;
-    description: string;
-}
-
 export interface CardsQueryResult {
     allCards: Card[];
 }
@@ -170,14 +108,8 @@ export interface Category {
     description: string;
 }
 
-export interface CategoryQuery {
-    id: string;
-    name: string;
-    description: string;
-}
-
 export interface CategoriesQueryResult {
-    allCategories: CategoryQuery[];
+    allCategories: Category[];
 }
 
 export interface NewCategoryDetails {
@@ -199,25 +131,8 @@ export interface Transaction {
     comment: string;
 }
 
-export interface TransactionQuery {
-    id: string;
-    account: {
-        bank: {
-            name: string;
-        };
-        description: string;
-    };
-    card: { description: string } | null;
-    currency: Currency;
-    category: Category;
-    sum: number;
-    transactionDate: Date;
-    description: string;
-    comment: string;
-}
-
 export interface TransactionsQueryResult {
-    allTransactions: TransactionQuery[];
+    allTransactions: Transaction[];
 }
 
 export interface NewTransactionDetails {

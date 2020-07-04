@@ -14,7 +14,7 @@ import {
     Theme
 } from "@material-ui/core";
 import { Add as AddIcon } from "@material-ui/icons";
-import { CategoriesQueryResult, CategoryQuery } from "../utils/types";
+import { CategoriesQueryResult, Category } from "../utils/types";
 import { ALL_CATEGORIES_QUERY } from "../utils/api";
 import AddCategoryForm from "./AddCategoryForm";
 
@@ -60,7 +60,7 @@ export default function Categories() {
                 <TableCell colSpan={numberOfColumns} align="center">Категории не найдены</TableCell>
             </TableRow>;
         }
-        return data.allCategories.map((category: CategoryQuery) =>
+        return data.allCategories.map((category: Category) =>
             <TableRow key={category.id}>
                 <TableCell>{category.name}</TableCell>
                 <TableCell>{category.description}</TableCell>
