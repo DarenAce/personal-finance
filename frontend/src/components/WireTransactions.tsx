@@ -14,7 +14,10 @@ import {
     Theme
 } from "@material-ui/core";
 import { Add as AddIcon } from "@material-ui/icons";
-import { TransactionQuery, TransactionsQueryResult } from "../utils/types";
+import {
+    Transaction,
+    TransactionsQueryResult
+} from "../utils/types";
 import { ALL_TRANSACTIONS_QUERY } from "../utils/api";
 import AddWireTransactionForm from "./AddWireTransactionForm";
 
@@ -60,7 +63,7 @@ export default function Expenses() {
                 <TableCell colSpan={numberOfColumns} align="center">Транзакции не найдены</TableCell>
             </TableRow>;
         }
-        return data.allTransactions.map((transaction: TransactionQuery) =>
+        return data.allTransactions.map((transaction: Transaction) =>
             <TableRow key={transaction.id}>
                 <TableCell>{transaction.account.bank.name}</TableCell>
                 <TableCell>{transaction.account.description}</TableCell>

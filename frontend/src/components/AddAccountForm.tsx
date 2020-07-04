@@ -9,8 +9,19 @@ import {
     TextField,
     MenuItem
 } from "@material-ui/core";
-import { ADD_ACCOUNT_MUTATION, ALL_BANKS_QUERY, ALL_CURRENCIES_QUERY, ALL_PERSONS_QUERY } from "../utils/api";
-import { Account, NewAccountDetails, BanksQueryResult, CurrenciesQueryResult, PersonsQueryResult } from "../utils/types";
+import {
+    ADD_ACCOUNT_MUTATION,
+    ALL_BANKS_QUERY,
+    ALL_CURRENCIES_QUERY,
+    ALL_PERSONS_QUERY
+} from "../utils/api";
+import {
+    Account,
+    NewAccountDetails,
+    BanksQueryResult,
+    CurrenciesQueryResult,
+    PersonsQueryResult
+} from "../utils/types";
 
 interface AddAccountFormProps {
     open: boolean;
