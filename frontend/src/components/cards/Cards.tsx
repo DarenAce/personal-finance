@@ -14,9 +14,9 @@ import {
     Theme
 } from "@material-ui/core";
 import { Add as AddIcon } from "@material-ui/icons";
-import { Bank, BanksQueryResult } from "../utils/types";
-import { ALL_BANKS_QUERY } from "../utils/api";
-import AddBankForm from "./AddBankForm";
+import { Card, CardsQueryResult } from "../../utils/types";
+import { ALL_CARDS_QUERY } from "../../utils/api";
+import AddCardForm from "./AddCardForm";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -31,17 +31,20 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-export default function Currencies() {
+export default function Cards() {
     const [isModalOpen, setModalOpen] = useState<boolean>(false);    
-    const { loading, error, data } = useQuery<BanksQueryResult, null>(ALL_BANKS_QUERY);
+    const { loading, error, data, refetch } = useQuery<CardsQueryResult, null>(ALL_CARDS_QUERY);
     const classes = useStyles();
 
     const handleModalOpen = () => {
         setModalOpen(true);
     };
 
-    const handleModalClose = () => {
+    const handleModalClose = (wasAdded: boolean) => {
         setModalOpen(false);
+        if (wasAdded) {
+            refetch();
+        }
     };
 
     const renderTableBody = (numberOfColumns: number) => {
@@ -55,36 +58,42 @@ export default function Currencies() {
                 <TableCell colSpan={numberOfColumns} align="center">Ошибка загрузки</TableCell>
             </TableRow>;
         }
-        if (data.allBanks.length === 0) {
+        if (data.allCards.length === 0) {
             return <TableRow>
-                <TableCell colSpan={numberOfColumns} align="center">Банки не найдены</TableCell>
+                <TableCell colSpan={numberOfColumns} align="center">Карты не найдены</TableCell>
             </TableRow>;
         }
-        return data.allBanks.map((bank: Bank) =>
-            <TableRow key={bank.id}>
-                <TableCell>{bank.name}</TableCell>
-                <TableCell>{bank.description}</TableCell>
+        return data.allCards.map((card: Card) =>
+            <TableRow key={card.id}>
+                <TableCell>{card.number}</TableCell>
+                <TableCell>{card.description}</TableCell>
+                <TableCell>{card.account.number}</TableCell>
+                <TableCell>{card.account.description}</TableCell>
+                <TableCell>{card.owner.fullName}</TableCell>
             </TableRow>
         );
     };
 
     return <>
         <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label="таблица банков">
+            <Table className={classes.table} aria-label="таблица карт">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Название</TableCell>
+                        <TableCell>Номер</TableCell>
                         <TableCell>Описание</TableCell>
+                        <TableCell>Номер счёта</TableCell>
+                        <TableCell>Описание счёта</TableCell>
+                        <TableCell>Владелец</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {renderTableBody(2)}
+                    {renderTableBody(5)}
                 </TableBody>
             </Table>
         </TableContainer>
         <Fab size="medium" color="secondary" onClick={handleModalOpen} className={classes.addButton}>
             <AddIcon />
         </Fab>
-        <AddBankForm isOpen={isModalOpen} onCloseCallback={handleModalClose} />
+        <AddCardForm isOpen={isModalOpen} onCloseCallback={handleModalClose} />
     </>;
 };

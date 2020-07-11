@@ -23,18 +23,18 @@ import {
     CurrenciesQueryResult,
     NewTransactionDetails,
     Transaction
-} from "../utils/types";
+} from "../../utils/types";
 import {
     ALL_ACCOUNTS_QUERY,
     ALL_CARDS_QUERY,
     ALL_CATEGORIES_QUERY,
     ALL_CURRENCIES_QUERY,
     ADD_WIRE_TRANSACTION_MUTATION
-} from "../utils/api";
+} from "../../utils/api";
 
 interface AddWireTransactionFormProps {
     isOpen: boolean;
-    onCloseCallback: () => void;
+    onCloseCallback: (wasAdded: boolean) => void;
 }
 
 export default function AddWireTransactionForm(props: AddWireTransactionFormProps) {
@@ -182,7 +182,7 @@ export default function AddWireTransactionForm(props: AddWireTransactionFormProp
 
     const handleClose = () => {
         clearFields();
-        onCloseCallback();
+        onCloseCallback(false);
     };
 
     const handleSubmit = () => {
@@ -196,7 +196,7 @@ export default function AddWireTransactionForm(props: AddWireTransactionFormProp
             && isDescriptionCorrect
             && saveTransaction();
         clearFields();
-        onCloseCallback();
+        onCloseCallback(true);
     };
 
     const clearFields = () => {

@@ -15,12 +15,12 @@ import { KeyboardDatePicker } from "@material-ui/pickers";
 import {
     NewPersonDetails,
     Person
-} from "../utils/types";
-import { ADD_PERSON_MUTATION } from "../utils/api";
+} from "../../utils/types";
+import { ADD_PERSON_MUTATION } from "../../utils/api";
 
 interface AddPersonFormProps {
     isOpen: boolean;
-    onCloseCallback: () => void;
+    onCloseCallback: (wasAdded: boolean) => void;
 }
 
 export default function AddPersonForm(props: AddPersonFormProps) {
@@ -101,7 +101,7 @@ export default function AddPersonForm(props: AddPersonFormProps) {
 
     const handleClose = () => {
         clearFields();
-        onCloseCallback();
+        onCloseCallback(false);
     };
 
     const handleSubmit = () => {
@@ -111,7 +111,7 @@ export default function AddPersonForm(props: AddPersonFormProps) {
             && isEmailCorrect
             && savePerson();
         clearFields();
-        onCloseCallback();
+        onCloseCallback(true);
     };
 
     const clearFields = () => {

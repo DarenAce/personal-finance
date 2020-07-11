@@ -6,12 +6,12 @@ import {
     Tabs,
     Tab
 } from "@material-ui/core";
-import Accounts from "./Accounts";
-import Banks from "./Banks";
-import Cards from "./Cards";
-import Categories from "./Categories";
-import Currencies from "./Currencies";
-import Persons from "./Persons";
+import Accounts from "./accounts/Accounts";
+import Banks from "./banks/Banks";
+import Cards from "./cards/Cards";
+import Categories from "./categories/Categories";
+import Currencies from "./currencies/Currencies";
+import Persons from "./persons/Persons";
 
 interface TabPanelProps {
     children?: ReactNode;

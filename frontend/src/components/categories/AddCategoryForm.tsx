@@ -14,12 +14,12 @@ import {
 import {
     Category,
     NewCategoryDetails
-} from "../utils/types";
-import { ADD_CATEGORY_MUTATION } from "../utils/api";
+} from "../../utils/types";
+import { ADD_CATEGORY_MUTATION } from "../../utils/api";
 
 interface AddCategoryFormProps {
     isOpen: boolean;
-    onCloseCallback: () => void;
+    onCloseCallback: (wasAdded: boolean) => void;
 }
 
 export default function AddCategoryForm(props: AddCategoryFormProps) {
@@ -62,13 +62,13 @@ export default function AddCategoryForm(props: AddCategoryFormProps) {
 
     const handleClose = () => {
         clearFields();
-        onCloseCallback();
+        onCloseCallback(false);
     };
 
     const handleSubmit = () => {
         isNameCorrect && saveCategory();
         clearFields();
-        onCloseCallback();
+        onCloseCallback(true);
     };
 
     const clearFields = () => {

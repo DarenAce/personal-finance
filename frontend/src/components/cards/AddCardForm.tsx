@@ -20,16 +20,16 @@ import {
     Card,
     NewCardDetails,
     PersonsQueryResult
-} from "../utils/types";
+} from "../../utils/types";
 import {
     ADD_CARD_MUTATION,
     ALL_ACCOUNTS_QUERY,
     ALL_PERSONS_QUERY
-} from "../utils/api";
+} from "../../utils/api";
 
 interface AddCardFormProps {
     isOpen: boolean;
-    onCloseCallback: () => void;
+    onCloseCallback: (wasAdded: boolean) => void;
 }
 
 export default function AddCardForm(props: AddCardFormProps) {
@@ -107,7 +107,7 @@ export default function AddCardForm(props: AddCardFormProps) {
 
     const handleClose = () => {
         clearFields();
-        onCloseCallback();
+        onCloseCallback(false);
     };
 
     const handleSubmit = () => {
@@ -116,7 +116,7 @@ export default function AddCardForm(props: AddCardFormProps) {
             && isOwnerCorrect
             && saveCard();
         clearFields();
-        onCloseCallback();
+        onCloseCallback(true);
     };
 
     const clearFields = () => {

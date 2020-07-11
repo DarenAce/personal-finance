@@ -14,12 +14,12 @@ import {
     Theme
 } from "@material-ui/core";
 import { Add as AddIcon } from "@material-ui/icons";
-import AddPersonForm from "./AddPersonForm";
 import {
-    Person,
-    PersonsQueryResult
-} from "../utils/types";
-import { ALL_PERSONS_QUERY } from "../utils/api";
+    Bank,
+    BanksQueryResult
+} from "../../utils/types";
+import { ALL_BANKS_QUERY } from "../../utils/api";
+import AddBankForm from "./AddBankForm";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -34,17 +34,20 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-export default function Persons() {
+export default function Currencies() {
     const [isModalOpen, setModalOpen] = useState<boolean>(false);
-    const { loading, error, data } = useQuery<PersonsQueryResult, null>(ALL_PERSONS_QUERY);
+    const { loading, error, data, refetch } = useQuery<BanksQueryResult, null>(ALL_BANKS_QUERY);
     const classes = useStyles();
 
     const handleModalOpen = () => {
         setModalOpen(true);
     };
 
-    const handleModalClose = () => {
+    const handleModalClose = (wasAdded: boolean) => {
         setModalOpen(false);
+        if (wasAdded) {
+            refetch();
+        }
     };
 
     const renderTableBody = (numberOfColumns: number) => {
@@ -58,42 +61,36 @@ export default function Persons() {
                 <TableCell colSpan={numberOfColumns} align="center">Ошибка загрузки</TableCell>
             </TableRow>;
         }
-        if (data.allPersons.length === 0) {
+        if (data.allBanks.length === 0) {
             return <TableRow>
-                <TableCell colSpan={numberOfColumns} align="center">Пользователи не найдены</TableCell>
+                <TableCell colSpan={numberOfColumns} align="center">Банки не найдены</TableCell>
             </TableRow>;
         }
-        return data.allPersons.map((person: Person) =>
-            <TableRow key={person.id}>
-                <TableCell>{person.firstName}</TableCell>
-                <TableCell>{person.middleName}</TableCell>
-                <TableCell>{person.lastName}</TableCell>
-                <TableCell>{new Date(person.birthday).toLocaleDateString()}</TableCell>
-                <TableCell>{person.email}</TableCell>
+        return data.allBanks.map((bank: Bank) =>
+            <TableRow key={bank.id}>
+                <TableCell>{bank.name}</TableCell>
+                <TableCell>{bank.description}</TableCell>
             </TableRow>
         );
     };
 
     return <>
         <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label="таблица пользователей">
+            <Table className={classes.table} aria-label="таблица банков">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Имя</TableCell>
-                        <TableCell>Отчество</TableCell>
-                        <TableCell>Фамилия</TableCell>
-                        <TableCell>Дата рождения</TableCell>
-                        <TableCell>Email</TableCell>
+                        <TableCell>Название</TableCell>
+                        <TableCell>Описание</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {renderTableBody(5)}
+                    {renderTableBody(2)}
                 </TableBody>
             </Table>
         </TableContainer>
         <Fab size="medium" color="secondary" onClick={handleModalOpen} className={classes.addButton}>
             <AddIcon />
         </Fab>
-        <AddPersonForm isOpen={isModalOpen} onCloseCallback={handleModalClose} />
+        <AddBankForm isOpen={isModalOpen} onCloseCallback={handleModalClose} />
     </>;
 };

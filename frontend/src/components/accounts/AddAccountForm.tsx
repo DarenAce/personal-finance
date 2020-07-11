@@ -21,17 +21,17 @@ import {
     CurrenciesQueryResult,
     NewAccountDetails,
     PersonsQueryResult
-} from "../utils/types";
+} from "../../utils/types";
 import {
     ADD_ACCOUNT_MUTATION,
     ALL_BANKS_QUERY,
     ALL_CURRENCIES_QUERY,
     ALL_PERSONS_QUERY
-} from "../utils/api";
+} from "../../utils/api";
 
 interface AddAccountFormProps {
     isOpen: boolean;
-    onCloseCallback: () => void;
+    onCloseCallback: (wasAdded: boolean) => void;
 }
 
 export default function AddAccountForm(props: AddAccountFormProps) {
@@ -126,7 +126,7 @@ export default function AddAccountForm(props: AddAccountFormProps) {
 
     const handleClose = () => {
         clearFields();
-        onCloseCallback();
+        onCloseCallback(false);
     };
 
     const handleSubmit = () => {
@@ -136,7 +136,7 @@ export default function AddAccountForm(props: AddAccountFormProps) {
             && isOwnerCorrect
             && saveAccount();
         clearFields();
-        onCloseCallback();
+        onCloseCallback(true);
     };
 
     const clearFields = () => {

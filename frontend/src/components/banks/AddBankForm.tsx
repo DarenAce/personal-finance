@@ -14,12 +14,12 @@ import {
 import {
     Bank,
     NewBankDetails
-} from "../utils/types";
-import { ADD_BANK_MUTATION } from "../utils/api";
+} from "../../utils/types";
+import { ADD_BANK_MUTATION } from "../../utils/api";
 
 interface AddBankFormProps {
     isOpen: boolean;
-    onCloseCallback: () => void;
+    onCloseCallback: (wasAdded: boolean) => void;
 }
 
 export default function AddBankForm(props: AddBankFormProps) {
@@ -29,7 +29,6 @@ export default function AddBankForm(props: AddBankFormProps) {
     const [description, setDescription] = useState<string>("");
 
     const [isNameCorrect, setNameCorrect] = useState<boolean>(true);
-    const [isDescriptionCorrect, setDescriptionCorrect] = useState<boolean>(true);
 
     const [nameHelperText, setNameHelperText] = useState<string>(" ");
 
@@ -63,13 +62,13 @@ export default function AddBankForm(props: AddBankFormProps) {
 
     const handleClose = () => {
         clearFields();
-        onCloseCallback();
+        onCloseCallback(false);
     };
 
     const handleSubmit = () => {
         isNameCorrect && saveBank();
         clearFields();
-        onCloseCallback();
+        onCloseCallback(true);
     };
 
     const clearFields = () => {
@@ -106,7 +105,6 @@ export default function AddBankForm(props: AddBankFormProps) {
                 label="Описание"
                 value={description}
                 onChange={handleDescriptionChange}
-                error={!isDescriptionCorrect}
                 helperText=" "
                 fullWidth
                 margin="normal"

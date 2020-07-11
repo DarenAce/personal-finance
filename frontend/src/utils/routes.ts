@@ -4,8 +4,8 @@ import {
     Tune as TuneIcon
 } from "@material-ui/icons";
 import { Route } from "./types";
-import WireTransactions from "../components/WireTransactions";
-import CashTransactions from "../components/CashTransactions";
+import WireTransactions from "../components/wire-transactions/WireTransactions";
+import CashTransactions from "../components/cash-transactions/CashTransactions";
 import Preferences from "../components/Preferences";
 
 const routes: Route[] = [

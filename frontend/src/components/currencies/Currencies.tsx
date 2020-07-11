@@ -15,11 +15,11 @@ import {
 } from "@material-ui/core";
 import { Add as AddIcon } from "@material-ui/icons";
 import {
-    CategoriesQueryResult,
-    Category
-} from "../utils/types";
-import { ALL_CATEGORIES_QUERY } from "../utils/api";
-import AddCategoryForm from "./AddCategoryForm";
+    CurrenciesQueryResult,
+    Currency
+} from "../../utils/types";
+import { ALL_CURRENCIES_QUERY } from "../../utils/api";
+import AddCurrencyForm from "./AddCurrencyForm";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -34,17 +34,20 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-export default function Categories() {
+export default function Currencies() {
     const [isModalOpen, setModalOpen] = useState<boolean>(false);
-    const { loading, error, data } = useQuery<CategoriesQueryResult, null>(ALL_CATEGORIES_QUERY);
+    const { loading, error, data, refetch } = useQuery<CurrenciesQueryResult, null>(ALL_CURRENCIES_QUERY);
     const classes = useStyles();
 
     const handleModalOpen = () => {
         setModalOpen(true);
     };
 
-    const handleModalClose = () => {
+    const handleModalClose = (wasAdded: boolean) => {
         setModalOpen(false);
+        if (wasAdded) {
+            refetch();
+        }
     };
 
     const renderTableBody = (numberOfColumns: number) => {
@@ -58,36 +61,38 @@ export default function Categories() {
                 <TableCell colSpan={numberOfColumns} align="center">Ошибка загрузки</TableCell>
             </TableRow>;
         }
-        if (data.allCategories.length === 0) {
+        if (data.allCurrencies.length === 0) {
             return <TableRow>
-                <TableCell colSpan={numberOfColumns} align="center">Категории не найдены</TableCell>
+                <TableCell colSpan={numberOfColumns} align="center">Валюты не найдены</TableCell>
             </TableRow>;
         }
-        return data.allCategories.map((category: Category) =>
-            <TableRow key={category.id}>
-                <TableCell>{category.name}</TableCell>
-                <TableCell>{category.description}</TableCell>
+        return data.allCurrencies.map((currency: Currency) =>
+            <TableRow key={currency.id}>
+                <TableCell>{currency.code}</TableCell>
+                <TableCell>{currency.country}</TableCell>
+                <TableCell>{currency.sign}</TableCell>
             </TableRow>
         );
     };
 
     return <>
         <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label="таблица категорий">
+            <Table className={classes.table} aria-label="таблица валют">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Название</TableCell>
-                        <TableCell>Описание</TableCell>
+                        <TableCell>Код</TableCell>
+                        <TableCell>Код страны</TableCell>
+                        <TableCell>Знак</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {renderTableBody(2)}
+                    {renderTableBody(3)}
                 </TableBody>
             </Table>
         </TableContainer>
         <Fab size="medium" color="secondary" onClick={handleModalOpen} className={classes.addButton}>
             <AddIcon />
         </Fab>
-        <AddCategoryForm isOpen={isModalOpen} onCloseCallback={handleModalClose} />
+        <AddCurrencyForm isOpen={isModalOpen} onCloseCallback={handleModalClose} />
     </>;
 };

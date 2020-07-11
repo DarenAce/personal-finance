@@ -14,12 +14,12 @@ import {
 import {
     Currency,
     NewCurrencyDetails
-} from "../utils/types";
-import { ADD_CURRENCY_MUTATION } from "../utils/api";
+} from "../../utils/types";
+import { ADD_CURRENCY_MUTATION } from "../../utils/api";
 
 interface AddCurrencyFormProps {
     isOpen: boolean;
-    onCloseCallback: () => void;
+    onCloseCallback: (wasAdded: boolean) => void;
 }
 
 export default function AddCurrencyForm(props: AddCurrencyFormProps) {
@@ -88,7 +88,7 @@ export default function AddCurrencyForm(props: AddCurrencyFormProps) {
 
     const handleClose = () => {
         clearFields();
-        onCloseCallback();
+        onCloseCallback(false);
     };
 
     const handleSubmit = () => {
@@ -97,7 +97,7 @@ export default function AddCurrencyForm(props: AddCurrencyFormProps) {
             && isSignCorrect
             && saveCurrency();
         clearFields();
-        onCloseCallback();
+        onCloseCallback(true);
     };
 
     const clearFields = () => {

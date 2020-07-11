@@ -17,8 +17,8 @@ import { Add as AddIcon } from "@material-ui/icons";
 import {
     Transaction,
     TransactionsQueryResult
-} from "../utils/types";
-import { ALL_WIRE_TRANSACTIONS_QUERY } from "../utils/api";
+} from "../../utils/types";
+import { ALL_WIRE_TRANSACTIONS_QUERY } from "../../utils/api";
 import AddWireTransactionForm from "./AddWireTransactionForm";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -36,15 +36,18 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function Expenses() {
     const [isModalOpen, setModalOpen] = useState(false);
-    const { loading, error, data } = useQuery<TransactionsQueryResult, null>(ALL_WIRE_TRANSACTIONS_QUERY);
+    const { loading, error, data, refetch } = useQuery<TransactionsQueryResult, null>(ALL_WIRE_TRANSACTIONS_QUERY);
     const classes = useStyles();
 
-    const handleOpen = () => {
+    const handleModalOpen = () => {
         setModalOpen(true);
     };
 
-    const handleClose = () => {
+    const handleModalClose = (wasAdded: boolean) => {
         setModalOpen(false);
+        if (wasAdded) {
+            refetch();
+        }
     };
 
     const renderTableBody = (numberOfColumns: number) => {
@@ -97,9 +100,9 @@ export default function Expenses() {
                 </TableBody>
             </Table>
         </TableContainer>
-        <Fab size="medium" color="secondary" onClick={handleOpen} className={classes.addButton}>
+        <Fab size="medium" color="secondary" onClick={handleModalOpen} className={classes.addButton}>
             <AddIcon />
         </Fab>
-        <AddWireTransactionForm isOpen={isModalOpen} onCloseCallback={handleClose} />
+        <AddWireTransactionForm isOpen={isModalOpen} onCloseCallback={handleModalClose} />
     </>
 };

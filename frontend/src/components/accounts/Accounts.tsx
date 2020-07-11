@@ -14,9 +14,12 @@ import {
     Theme
 } from "@material-ui/core";
 import { Add as AddIcon } from "@material-ui/icons";
-import { Card, CardsQueryResult } from "../utils/types";
-import { ALL_CARDS_QUERY } from "../utils/api";
-import AddCardForm from "./AddCardForm";
+import {
+    Account,
+    AccountsQueryResult
+} from "../../utils/types";
+import { ALL_ACCOUNTS_QUERY } from "../../utils/api";
+import AddAccountForm from "./AddAccountForm";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -31,17 +34,20 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 );
 
-export default function Cards() {
-    const [isModalOpen, setModalOpen] = useState<boolean>(false);    
-    const { loading, error, data } = useQuery<CardsQueryResult, null>(ALL_CARDS_QUERY);
+export default function Accounts() {
+    const [isModalOpen, setModalOpen] = useState<boolean>(false);
+    const { loading, error, data, refetch } = useQuery<AccountsQueryResult, null>(ALL_ACCOUNTS_QUERY);
     const classes = useStyles();
 
     const handleModalOpen = () => {
         setModalOpen(true);
     };
 
-    const handleModalClose = () => {
+    const handleModalClose = (wasAdded: boolean) => {
         setModalOpen(false);
+        if (wasAdded) {
+            refetch();
+        }
     };
 
     const renderTableBody = (numberOfColumns: number) => {
@@ -55,32 +61,32 @@ export default function Cards() {
                 <TableCell colSpan={numberOfColumns} align="center">Ошибка загрузки</TableCell>
             </TableRow>;
         }
-        if (data.allCards.length === 0) {
+        if (data.allAccounts.length === 0) {
             return <TableRow>
-                <TableCell colSpan={numberOfColumns} align="center">Карты не найдены</TableCell>
+                <TableCell colSpan={numberOfColumns} align="center">Счета не найдены</TableCell>
             </TableRow>;
         }
-        return data.allCards.map((card: Card) =>
-            <TableRow key={card.id}>
-                <TableCell>{card.number}</TableCell>
-                <TableCell>{card.description}</TableCell>
-                <TableCell>{card.account.number}</TableCell>
-                <TableCell>{card.account.description}</TableCell>
-                <TableCell>{card.owner.fullName}</TableCell>
+        return data.allAccounts.map((account: Account) =>
+            <TableRow key={account.id}>
+                <TableCell>{account.number}</TableCell>
+                <TableCell>{account.description}</TableCell>
+                <TableCell>{account.bank.name}</TableCell>
+                <TableCell>{account.owner.fullName}</TableCell>
+                <TableCell>{account.currency.sign}</TableCell>
             </TableRow>
         );
     };
 
     return <>
         <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label="таблица карт">
+            <Table className={classes.table} aria-label="таблица счетов">
                 <TableHead>
                     <TableRow>
                         <TableCell>Номер</TableCell>
                         <TableCell>Описание</TableCell>
-                        <TableCell>Номер счёта</TableCell>
-                        <TableCell>Описание счёта</TableCell>
+                        <TableCell>Банк</TableCell>
                         <TableCell>Владелец</TableCell>
+                        <TableCell>Валюта</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -91,6 +97,6 @@ export default function Cards() {
         <Fab size="medium" color="secondary" onClick={handleModalOpen} className={classes.addButton}>
             <AddIcon />
         </Fab>
-        <AddCardForm isOpen={isModalOpen} onCloseCallback={handleModalClose} />
+        <AddAccountForm isOpen={isModalOpen} onCloseCallback={handleModalClose} />
     </>;
 };
