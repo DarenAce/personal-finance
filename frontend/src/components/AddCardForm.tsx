@@ -5,7 +5,7 @@ import React, {
 import {
     useQuery,
     useMutation
-} from "react-apollo";
+} from "@apollo/client";
 import {
     Button,
     Dialog,

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useQuery } from "react-apollo";
+import { useQuery } from "@apollo/client";
 import {
     createStyles,
     Fab,
@@ -14,7 +14,10 @@ import {
     Theme
 } from "@material-ui/core";
 import { Add as AddIcon } from "@material-ui/icons";
-import { Account, AccountsQueryResult } from "../utils/types";
+import {
+    Account,
+    AccountsQueryResult
+} from "../utils/types";
 import { ALL_ACCOUNTS_QUERY } from "../utils/api";
 import AddAccountForm from "./AddAccountForm";
 
@@ -32,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export default function Accounts() {
-    const [isModalOpen, setModalOpen] = useState<boolean>(false);    
+    const [isModalOpen, setModalOpen] = useState<boolean>(false);
     const { loading, error, data } = useQuery<AccountsQueryResult, null>(ALL_ACCOUNTS_QUERY);
     const classes = useStyles();
 

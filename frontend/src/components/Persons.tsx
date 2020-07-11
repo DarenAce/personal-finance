@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useQuery } from "react-apollo";
+import { useQuery } from "@apollo/client";
 import {
     createStyles,
     Fab,
@@ -15,7 +15,10 @@ import {
 } from "@material-ui/core";
 import { Add as AddIcon } from "@material-ui/icons";
 import AddPersonForm from "./AddPersonForm";
-import { Person, PersonsQueryResult } from "../utils/types";
+import {
+    Person,
+    PersonsQueryResult
+} from "../utils/types";
 import { ALL_PERSONS_QUERY } from "../utils/api";
 
 const useStyles = makeStyles((theme: Theme) =>

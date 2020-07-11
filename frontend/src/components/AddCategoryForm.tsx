@@ -2,7 +2,7 @@ import React, {
     ChangeEvent,
     useState
 } from "react";
-import { useMutation } from "react-apollo";
+import { useMutation } from "@apollo/client";
 import {
     Button,
     Dialog,

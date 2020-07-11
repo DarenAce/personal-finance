@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useQuery } from "react-apollo";
+import { useQuery } from "@apollo/client";
 import {
     createStyles,
     Fab,
@@ -14,7 +14,10 @@ import {
     Theme
 } from "@material-ui/core";
 import { Add as AddIcon } from "@material-ui/icons";
-import { CurrenciesQueryResult, Currency } from "../utils/types";
+import {
+    CurrenciesQueryResult,
+    Currency
+} from "../utils/types";
 import { ALL_CURRENCIES_QUERY } from "../utils/api";
 import AddCurrencyForm from "./AddCurrencyForm";
 
@@ -32,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export default function Currencies() {
-    const [isModalOpen, setModalOpen] = useState<boolean>(false);    
+    const [isModalOpen, setModalOpen] = useState<boolean>(false);
     const { loading, error, data } = useQuery<CurrenciesQueryResult, null>(ALL_CURRENCIES_QUERY);
     const classes = useStyles();
 

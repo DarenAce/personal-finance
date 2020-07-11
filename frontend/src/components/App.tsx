@@ -5,9 +5,11 @@ import {
     Switch,
     Redirect
 } from "react-router-dom";
-import { ApolloProvider } from "react-apollo";
-import ApolloClient from "apollo-boost";
-import { InMemoryCache } from "apollo-cache-inmemory";
+import {
+    ApolloClient,
+    ApolloProvider,
+    InMemoryCache
+} from "@apollo/client";
 import DateFnsUtils from "@date-io/date-fns";
 import {
     createStyles,
